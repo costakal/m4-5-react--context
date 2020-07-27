@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import GlobalStyles from "./GlobalStyles";
 import Home from "./Home";
 import Game from "./Game";
 import usePersistedState from "../hooks/usePersistedState";
+import useInterval from "../hooks/use-interval.hook";
+
 import { GameContext } from "./GameContext";
 
 function App() {
@@ -16,15 +18,16 @@ function App() {
     calculateCookiesPerSecond,
   } = useContext(GameContext);
 
-  // const [numCookies, setNumCookies] = React.usePersistedState(
-  //   "numCookies",
-  //   1000
-  // );
-  // const [purchasedItems, setPurchasedItems] = React.useState('purchasedItems',{
-  //   cursor: 0,
-  //   grandma: 0,
-  //   farm: 0,
-  // });
+  useInterval(() => {
+    const numOfGeneratedCookies = calculateCookiesPerSecond(purchasedItems);
+
+    setNumCookies(numCookies + numOfGeneratedCookies);
+    window.localStorage.setItem("num-cookies", numCookies);
+  }, 1000);
+
+  useEffect(() => {
+    setNumCookies(Number(window.localStorage.getItem("num-cookies")));
+  }, []);
 
   return (
     <>

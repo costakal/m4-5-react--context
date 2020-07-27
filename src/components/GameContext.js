@@ -1,6 +1,5 @@
 import React from "react";
 
-import useInterval from "../hooks/use-interval.hook";
 import items from "../data";
 
 export const GameContext = React.createContext(null);
@@ -22,13 +21,6 @@ export const GameProvider = ({ children }) => {
       return acc + value * numOwned;
     }, 0);
   };
-
-  useInterval(() => {
-    const numOfGeneratedCookies = calculateCookiesPerSecond(purchasedItems);
-
-    setNumCookies(numCookies + numOfGeneratedCookies);
-    window.localStorage.setItem("num-cookies", numCookies);
-  }, 1000);
 
   return (
     <GameContext.Provider

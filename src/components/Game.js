@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import cookieSrc from "../cookie.svg";
 import Item from "./Item";
-import { items } from "./App";
+import items from "../data";
+import { GameContext } from "./GameContext";
 
-const Game = ({
-  setNumCookies,
-  setPurchasedItems,
-  numCookies,
-  purchasedItems,
-  calculateCookiesPerSecond,
-}) => {
+const Game = () => {
+  const {
+    setNumCookies,
+    setPurchasedItems,
+    numCookies,
+    purchasedItems,
+    calculateCookiesPerSecond,
+  } = useContext(GameContext);
+
   const incrementCookies = () => {
     setNumCookies((c) => c + 1);
   };
